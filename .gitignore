@@ -8,6 +8,7 @@ Python_for_Data_Science/week-7/weather/
 Python_for_Data_Science/week-8/nltk_data/
 Probability_and_Statistics_in_Data_Science_using_Python/Topic 1: Introduction_to_Probability_and_Statistics/Topic1-IntroMotivation/1.What-is-Probability slides_files/
 Probability_and_Statistics_in_Data_Science_using_Python/Topic 1: Introduction_to_Probability_and_Statistics/Topic1-IntroMotivation/images/
+Probability_and_Statistics_in_Data_Science_using_Python/Topic 1: Introduction_to_Probability_and_Statistics/Topic1-IntroMotivation/
 Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/Section1-Spark-Basics/0.MemoryLatency/lib/
 Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/Section1-Spark-Basics/0.MemoryLatency/Outputs/
 Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/Section1-Spark-Basics/1.BasicSpark/Figures/
@@ -15,6 +16,11 @@ Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/Section1-Spark-Basics/2.Spa
 Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/Section1-Spark-Basics/2.SparkSQL/Figures/
 Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/PA1/resource/
 Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/resource/
+Big_Data_Analytics_Using_Spark/Section2-Weather-PCA/resource/
+Big_Data_Analytics_Using_Spark/Section1-Spark-Basics/PA2/resource/
+Probability_and_Statistics_in_Data_Science_using_Python/Topic 1: Introduction_to_Probability_and_Statistics/Topic1-IntroMotivation/
+Python_for_Data_Science/week-6/movielens/
+
 *.npy
 *.pyc
 *.sqlite
