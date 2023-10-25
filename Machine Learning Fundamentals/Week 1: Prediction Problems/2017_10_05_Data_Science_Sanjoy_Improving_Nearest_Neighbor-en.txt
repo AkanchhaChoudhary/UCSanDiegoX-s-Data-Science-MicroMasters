@@ -1,0 +1,249 @@
+- So last time, we saw the basics
+of nearest neighbor classification.
+And now we'll see how to take it to the next level.
+So if you remember, we tried out nearest neighbor
+on the MNIST data set of handwritten digits.
+And we found that it gets pretty reasonable performance,
+an error rate of 3.09% on a separate test set.
+And these are some examples of the mistakes that it made.
+How can we improve its performance even further?
+Let's look at two standard ways of doing this.
+The first is to move to K-nearest neighbors
+and the second is to look for better distance functions.
+So K-nearest neighbor classification,
+this is a very simple idea.
+When doing nearest neighbor, instead of simply looking for
+the very closest point in the test set.
+Find the closest three points, or the closest five points.
+They each have a label.
+Return the majority label, or the most common label.
+Let's see how this does on MNIST.
+Okay.
+So, when K equals one, this is just
+the same nearest neighbor classifier we saw last time.
+And it has an error rate of 3.09%.
+When K equals three what we're doing in order to classify
+a new image is finding it's three closest images
+in the training set.
+And returning their majority label.
+If we do this, the error rate goes down slightly,
+to 2.49%.
+When we try larger values of K,
+five, seven, nine, and so on,
+the error rate starts going up again.
+Okay?
+Now one thing that's important to mention over here,
+is that these errors are measured on the separate test set.
+Measuring errors on the training set is really a very
+poor indication of future performance.
+So on this particular data set, varying K
+helps a little bit, but not dramatically.
+In other cases, it sometimes helps a lot.
+But how do we choose the right value of K?
+In this toy example we had a separate test set,
+but that's not something we typically have in real life.
+We'd only have the training set
+and we've already made it clear
+that error on the training set is
+rather a poor indication of error in practice.
+How do we deal with this?
+This is a rather tricky problem.
+And it's a problem that's not limited to nearest neighbor.
+This is something we see over and over again
+in machine learning.
+Many of the methods we study will have parameters,
+like K, that need to be set correctly.
+If we set them well, the method works well.
+If we set them poorly, the method works poorly.
+And we have to somehow set them
+using the training set alone.
+A standard way of doing this is by
+something called cross-validation.
+So let me show you how this works for K-nearest neighbor.
+Suppose we want to evaluate a particular choice of K.
+For example, three nearest neighbor, K equals three.
+We want to estimate the error rate
+of three nearest neighbor,
+but using only the training set.
+How would we do this?
+So here's how 10-fold cross-validation would work.
+We take our training set, those 60,000 points,
+and we divide it into ten equal chunks.
+So ten chunks of 6,000 points each.
+Let's call these S1, S2, S3, S4, all the way to S10.
+Now for each of these S sub I's, we'll do the following.
+We'll take just that chunk
+and we'll think of it as the test set.
+And we'll think of the remaining nine chunks
+as the training set.
+And for each point, in S sub I,
+each of the 6,000 points in S sub I,
+we will classify it using the remaining 54,000 points.
+That will give us an error rate, for S sub I,
+which we'll call epsilon sub I,
+and once we've done this for each of these pieces,
+we have these 10 error rates,
+epsilon one through epsilon 10.
+Each of these individually is a fairly decent estimate
+for the error rate of K-nearest neighbor.
+To get an even better estimate,
+we average the 10 of them,
+and so this is our final estimate
+of the error of K-nearest neighbor
+for a specific value of K.
+Now of course, we will want to experiment
+with multiple values of K.
+We'll try K equals one, K equals three, K equals five
+and so on, and in each case,
+for each of these values of K, we'll run
+10-fold cross-validation, we'll get an error estimate
+and then we'll pick the K with the lowest error estimate,
+and that's how we find the K-nearest neighbor.
+Now what I've described over here
+is called 10-fold cross-validation
+because we divide the data set into 10 equal pieces.
+But we could also do five fold cross-validation,
+where divide it into five pieces.
+So the 60,000 points, will be divided into pieces
+of 12,000 points, or we could do eight-fold cross-validation
+or four-fold cross-validation for instance.
+Okay?
+But let's us choose K.
+Okay, so we've seen one approach
+to improving nearest neighbor by looking at more neighbors,
+by looking at K-nearest neighbors instead of just one.
+Another strategy which works very well in many settings
+is to look for better distance functions.
+Now when we were running nearest neighbor on MNIST,
+we used Euclidean distance,
+but actually Euclidean distance is not a good choice
+for images in general.
+So look at these two images for instance,
+they are actually exactly the same,
+except one of them is slightly scrolled to the right.
+Okay?
+Not a big difference to us,
+but what it means is that that vector representations
+are completely different and so there's actually
+a significant L2 distance between them.
+Clearly Euclidean distance is not a great choice for images.
+So what we'd like is to come up
+with a different distance function
+that doesn't behave badly in this way.
+We'd like a distance function, which doesn't change
+if you take one the of images
+and translate it slightly or rotate it slightly,
+and people have looked into this
+and have come up with such a distance function
+called tangent distance.
+Even better, would be a distance function
+that is invariant under an even larger family
+of deformations, not just small translations and rotations
+but maybe, for example, taking a line
+and making it slightly curved.
+One example of such a distance function
+is called shape context.
+So these are better distance functions
+and what happens when you use these
+for doing nearest neighbor,
+what happens to the performance on MNIST?
+And as we can see, it improves dramatically.
+Okay?
+With shape context, for example,
+the error rate drops well below 1%.
+In general, in using domain knowledge
+to pick better data representations
+and better distance functions
+and better similarity functions,
+can be very, very beneficial in classification,
+and so something that might be well worth the effort
+if you really want an accurate classifier.
+Now one aspect of choosing a distance function
+is first just choosing the right features.
+In the case of MNIST, the features we were using
+were the 780 individual pixels in the image
+and these are all features that are arguably relevant
+to classification.
+But in many other situations, the data has lots of features
+that are completely irrelevant to the classification
+task at hand.
+So for example, suppose you are building a classifier
+that takes loan applications and tries to decide
+whether the person is at risk of default.
+Now the data in this case, the loan application
+contains a lot of useful information,
+like age and income and so on,
+but also contains a lot of information
+that's completely irrelevant like social security numbers
+if you don't remove these features,
+they can reek havoc with nearest neighbor.
+The distance computations could be completely dominated
+by these features.
+Okay?
+So here's a pictorial depiction of this.
+So one the left over here we have a data set
+that's just in one dimension and it has two labels.
+Red and blue.
+The points with smaller X value are red,
+the points with higher X value are blue.
+They're nicely separated and nearest neighbor
+will work extremely well on this one dimensional data.
+One the right over here, we decide to add in
+an extra feature along the X2 axis.
+This feature is completely irrelevant,
+and it completely wrecks the performance
+of nearest neighbor.
+Okay?
+So for example, let's say that these dots over here
+are the training points.
+How would this point be classified?
+Suppose this is a test point.
+Well it's nearest neighbor is this,
+so it would be classified as red.
+Uh oh, that's not good.
+How would this point be classified?
+Well it's nearest neighbor is this,
+so it would be classified as blue,
+not good at all.
+So feature selection is very important
+prior to using nearest neighbor.
+Now so far, we've been talking about
+improving the statistical performance
+of nearest neighbor, including improving
+the classification accuracy of nearest neighbor.
+But another thing is very important
+is the algorithmic side of things.
+Nearest neighbor search can actually be
+rather slow if the training set is large.
+When we were doing nearest neighbor on MNIST, for example,
+in order to classify a new image,
+we had to look through 60,000 training images.
+This is not pleasant, can you imagine
+if the training set instead had a million images
+or 100 million images?
+It would render nearest neighbor completely impractical.
+Well formally, there's a training set of size N.
+A naive search for the nearest neighbor
+takes time proportional to N,
+which is very bad.
+The good news is that this problem is something
+that has been researched for several decades now
+and people have come up with a variety of data structures
+for significantly speeding up nearest neighbor search.
+These data structures have names like
+locality sensitive hashing, ball trees,
+K-d trees, and there's a whole lot more of them.
+The main thing is to be aware of them.
+They're part of standard libraries and Python for example,
+and in some cases, they can reduce the search time
+from something like N to something more like log N,
+and in general they are quite helpful.
+Well, nearest neighbor has been our introduction,
+our first window into machine learning
+and we've used it to discuss basic concepts
+like training error and test error,
+feature selection, and cross-validation.
+Very soon we will come across all sorts of other methods
+for classification, but nearest neighbor
+is the oldest of them all
+and one of the simplest and most flexible.
