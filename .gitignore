@@ -39,3 +39,4 @@ Python_for_Data_Science/week-1/__pycache__/
 *.png
 *.jpg
 *.hdf5
+*.parquet
